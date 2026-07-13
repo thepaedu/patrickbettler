@@ -1,5 +1,6 @@
 <script setup>
 import { useHead } from '@unhead/vue'
+import profilbild from './assets/patrick-bettler.jpg'
 
 useHead({
   title: 'Patrick Bettler',
@@ -18,7 +19,7 @@ useHead({
     },
     {
       property: 'og:image',
-      content: 'https://patrickbettler.ch/patrick-bettler.jpg',
+      content: 'https://thepaedu.github.io/patrickbettler/assets/patrick-bettler-BNCAPXrR.jpg',
     },
     {
       property: 'og:type',
@@ -36,8 +37,8 @@ useHead({
         "@context": "https://schema.org",
         "@type": "Person",
         name: "Patrick Bettler",
-        url: "https://patrickbettler.ch",
-        image: "https://patrickbettler.ch/patrick-bettler.jpg",
+      "url": "https://thepaedu.github.io/patrickbettler/",
+      "image": "https://thepaedu.github.io/patrickbettler/assets/patrick-bettler-BNCAPXrR.jpg",
         sameAs: [
           "https://www.instagram.com/patrick_bettler/",
           "https://github.com/thepaedu/patrickbettler/"
@@ -51,7 +52,7 @@ useHead({
 <template>
   <div>
     <img
-      src="/patrick-bettler.jpg"
+      :src="profilbild"
       id="profilbild"
       alt="Patrick Bettler"
       width="150"
