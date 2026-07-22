@@ -79,7 +79,7 @@ useHead({
 
       <a
         class="icon-btn"
-        href="https://github.com/thepaedu/patrickbettler"
+        href="https://github.com/thepaedu"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="GitHub Profil von Patrick Bettler"
@@ -90,6 +90,11 @@ useHead({
         <span>GitHub</span>
       </a>
     </nav>
+
+    <div class="gallery">
+      <img src="/images/patrick-bettler-informatiker-abschlussfeier.jpg" alt="Patrick Bettler erhält sein Abschlusszeugnis als Informatiker" class="gallery-img">
+    </div>
+    
   </div>
 </template>
 
@@ -137,4 +142,19 @@ useHead({
   outline: 2px solid var(--teal);
   outline-offset: 2px;
 }
+
+.gallery {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.gallery-img {
+  width: 320px;
+  max-width: 100%;
+  border-radius: 8px;
+}
+
 </style>
