@@ -7,23 +7,5 @@ export const projects = [
     demoUrl: '',
     repoUrl: '',
     cover: '',
-  },
-  {
-    title: 'Weiteres Tool',
-    description:
-      'Beschreibung des zweiten Projekts. Ersetze diese Platzhalter durch deine eigenen Apps und Tools.',
-    tags: ['Python', 'CLI'],
-    demoUrl: '',
-    repoUrl: '',
-    cover: '',
-  },
-  {
-    title: 'App-Idee',
-    description:
-      'Noch ein Platzhalter-Eintrag – einfach in dieser Datei kopieren, um weitere Projekte hinzuzufügen.',
-    tags: ['Mobile'],
-    demoUrl: '',
-    repoUrl: '',
-    cover: '',
-  },
+  }
 ]
