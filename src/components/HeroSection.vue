@@ -58,8 +58,7 @@ onMounted(() => {
 
     <h1 ref="titleRef">Patrick Bettler</h1>
     <p class="subtitle" ref="subtitleRef">
-      Informatiker &middot; ich baue Software, schreibe darüber und halte
-      Momente in Bildern fest.
+      software developer
     </p>
 
     <div class="cta" ref="ctaRef">
