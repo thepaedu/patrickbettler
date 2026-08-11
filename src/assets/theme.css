@@ -1,0 +1,155 @@
+/* ============================================
+   Theme: Glassmorphism – dunkler Grund, Gold/Teal Akzente
+   Diese Variablen werden bereits in bestehenden Komponenten
+   referenziert (--ink, --gold, --teal), deshalb hier zentral
+   definiert und um Glass-Variablen erweitert.
+   ============================================ */
+
+:root {
+  /* Basisfarben */
+  --bg-deep: #0a1014;
+  --bg-deep-2: #0f1a1d;
+  --ink: #f5efe6;
+  --ink-muted: rgba(245, 239, 230, 0.65);
+  --gold: #d4af6a;
+  --teal: #2fb8ac;
+
+  /* Glass-Oberflächen */
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-bg-strong: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(245, 239, 230, 0.14);
+  --glass-blur: 18px;
+  --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.35);
+  --shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.45);
+
+  /* Radien / Abstände */
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+  --container-w: 1100px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--bg-deep);
+  overflow-x: hidden;
+}
+
+#app {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Ambiente: weiche, driftende Farbflecken hinter allem */
+.bg-blobs {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: radial-gradient(circle at 20% 20%, var(--bg-deep-2), var(--bg-deep) 60%);
+}
+
+.bg-blobs span {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.35;
+  animation: drift 22s ease-in-out infinite alternate;
+}
+
+.bg-blobs span:nth-child(1) {
+  width: 420px;
+  height: 420px;
+  top: -10%;
+  left: -8%;
+  background: var(--teal);
+  animation-delay: 0s;
+}
+
+.bg-blobs span:nth-child(2) {
+  width: 380px;
+  height: 380px;
+  bottom: -12%;
+  right: -6%;
+  background: var(--gold);
+  animation-delay: -8s;
+}
+
+.bg-blobs span:nth-child(3) {
+  width: 300px;
+  height: 300px;
+  top: 40%;
+  left: 55%;
+  background: #6a7fd4;
+  opacity: 0.2;
+  animation-delay: -14s;
+}
+
+@keyframes drift {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(40px, 60px) scale(1.15);
+  }
+}
+
+/* Wiederverwendbare Glass-Oberfläche */
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--shadow-soft);
+}
+
+a {
+  color: inherit;
+}
+
+.container {
+  max-width: var(--container-w);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(var(--glass-blur));
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.btn:hover {
+  border-color: var(--gold);
+  background: rgba(212, 175, 106, 0.12);
+  transform: translateY(-2px);
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, rgba(212, 175, 106, 0.25), rgba(47, 184, 172, 0.25));
+  border-color: var(--gold);
+}

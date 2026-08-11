@@ -1,160 +1,176 @@
 <script setup>
+import { ref } from 'vue'
 import { useHead } from '@unhead/vue'
-import profilbild from './assets/patrick-bettler.jpg'
 
+// Site-weite Defaults. Einzelne Seiten (Home, Blog, ...) überschreiben
+// nur title/description via ihr eigenes useHead(); diese Tags hier bleiben
+// auf jeder Seite bestehen.
 useHead({
-  title: 'Patrick Bettler',
   meta: [
-    {
-      name: 'description',
-      content: 'Offizielle Webseite von Patrick Bettler.',
-    },
-    {
-      property: 'og:title',
-      content: 'Patrick Bettler',
-    },
-    {
-      property: 'og:description',
-      content: 'Offizielle Webseite von Patrick Bettler.',
-    },
+    { property: 'og:title', content: 'Patrick Bettler' },
+    { property: 'og:description', content: 'Offizielle Webseite von Patrick Bettler.' },
     {
       property: 'og:image',
       content: 'https://thepaedu.github.io/patrickbettler/assets/patrick-bettler-BNCAPXrR.jpg',
     },
-    {
-      property: 'og:type',
-      content: 'website',
-    },
-    {
-      name: 'twitter:card',
-      content: 'summary_large_image',
-    },
+    { property: 'og:type', content: 'website' },
+    { name: 'twitter:card', content: 'summary_large_image' },
   ],
   script: [
     {
       type: 'application/ld+json',
       children: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Person",
-        name: "Patrick Bettler",
-      "url": "https://thepaedu.github.io/patrickbettler/",
-      "image": "https://thepaedu.github.io/patrickbettler/assets/patrick-bettler-BNCAPXrR.jpg",
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: 'Patrick Bettler',
+        url: 'https://thepaedu.github.io/patrickbettler/',
+        image: 'https://thepaedu.github.io/patrickbettler/assets/patrick-bettler-BNCAPXrR.jpg',
         sameAs: [
-          "https://www.instagram.com/patrick_bettler/",
-          "https://github.com/thepaedu/patrickbettler/"
-        ]
-      })
-    }
-  ]
+          'https://www.instagram.com/patrick_bettler/',
+          'https://github.com/thepaedu/patrickbettler/',
+        ],
+      }),
+    },
+  ],
 })
+
+const menuOpen = ref(false)
+const navLinks = [
+  { to: '/', label: 'Home' },
+  { to: '/blog', label: 'Blog' },
+  { to: '/galerie', label: 'Galerie' },
+  { to: '/projekte', label: 'Projekte' },
+]
 </script>
 
 <template>
-  <div>
-    <img
-      :src="profilbild"
-      id="profilbild"
-      alt="Patrick Bettler"
-      width="150"
-      height="150"
-    />
-
-    <h1>Patrick Bettler</h1>
-
-    <nav class="links" aria-label="Social Media">
-      <a
-        class="icon-btn"
-        href="https://www.instagram.com/patrick_bettler/"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Instagram Profil von Patrick Bettler"
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="3" y="3" width="18" height="18" rx="5"/>
-          <circle cx="12" cy="12" r="4"/>
-          <circle cx="17.2" cy="6.8" r="1"/>
-        </svg>
-        <span>Instagram</span>
-      </a>
-
-      <a
-        class="icon-btn"
-        href="https://github.com/thepaedu"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="GitHub Profil von Patrick Bettler"
-      >
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2C6.48 2 2 6.58 2 12.2c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.49 0-.24-.01-1.05-.01-1.9-2.78.62-3.37-1.22-3.37-1.22-.46-1.2-1.11-1.52-1.11-1.52-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.35 1.12 2.92.85.09-.67.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.05a9.32 9.32 0 0 1 5 0c1.9-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.2 10.2 0 0 0 22 12.2C22 6.58 17.52 2 12 2Z"/>
-        </svg>
-        <span>GitHub</span>
-      </a>
-    </nav>
-
-    <div class="gallery">
-      <img src="/images/patrick-bettler-informatiker-abschlussfeier.jpg" alt="Patrick Bettler erhält sein Abschlusszeugnis als Informatiker" class="gallery-img">
-    </div>
-    
+  <div class="bg-blobs" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
+
+  <header class="navbar glass">
+    <div class="navbar-inner container">
+      <router-link to="/" class="brand">Patrick Bettler</router-link>
+
+      <nav class="nav-links" :class="{ open: menuOpen }">
+        <router-link
+          v-for="link in navLinks"
+          :key="link.to"
+          :to="link.to"
+          @click="menuOpen = false"
+        >
+          {{ link.label }}
+        </router-link>
+      </nav>
+
+      <button class="burger" @click="menuOpen = !menuOpen" aria-label="Menü">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <router-view v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
+  </main>
 </template>
 
 <style scoped>
-#profilbild {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+.navbar {
+  position: sticky;
+  top: 1rem;
+  margin: 1rem auto 0;
+  max-width: var(--container-w);
+  border-radius: var(--radius-lg);
+  z-index: 40;
 }
 
-.links {
+.navbar-inner {
   display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.icon-btn {
-  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.55rem 1.1rem;
-  border-radius: 999px;
-  border: 1px solid rgba(245, 239, 230, 0.25);
-  color: var(--ink);
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+}
+
+.brand {
+  font-weight: 600;
   text-decoration: none;
-  font-size: 0.8rem;
-  letter-spacing: 0.02em;
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  letter-spacing: 0.01em;
 }
 
-.icon-btn svg {
-  width: 18px;
-  height: 18px;
-}
-
-.icon-btn:hover,
-.icon-btn:focus-visible {
-  border-color: var(--gold);
-  background: rgba(212, 175, 106, 0.1);
-  transform: translateY(-2px);
-}
-
-.icon-btn:focus-visible {
-  outline: 2px solid var(--teal);
-  outline-offset: 2px;
-}
-
-.gallery {
+.nav-links {
   display: flex;
-  justify-content: center;
   gap: 1.5rem;
-  flex-wrap: wrap;
-  margin-top: 2rem;
 }
 
-.gallery-img {
-  width: 320px;
-  max-width: 100%;
-  border-radius: 8px;
+.nav-links a {
+  text-decoration: none;
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+  transition: color 0.2s ease;
 }
 
+.nav-links a:hover,
+.nav-links a.router-link-active {
+  color: var(--gold);
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.burger span {
+  width: 22px;
+  height: 2px;
+  background: var(--ink);
+}
+
+main {
+  min-height: 60vh;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+@media (max-width: 640px) {
+  .nav-links {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    flex-direction: column;
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+    backdrop-filter: blur(var(--glass-blur));
+    display: none;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .burger {
+    display: flex;
+  }
+}
 </style>

@@ -7,27 +7,27 @@ export const routes = [
   {
     path: '/',
     name: 'home',
-    component: () => import('./views/Home.vue'),
+    component: () => import('../views/Home.vue'),
   },
   {
     path: '/blog',
     name: 'blog',
-    component: () => import('./views/Blog.vue'),
+    component: () => import('../views/Blog.vue'),
   },
   {
     path: '/blog/:slug',
     name: 'blog-post',
-    component: () => import('./views/BlogPost.vue'),
+    component: () => import('../views/BlogPost.vue'),
     props: true,
   },
   {
     path: '/galerie',
     name: 'gallery',
-    component: () => import('./views/Gallery.vue'),
+    component: () => import('../views/Gallery.vue'),
   },
   {
     path: '/projekte',
     name: 'projects',
-    component: () => import('./views/Projects.vue'),
+    component: () => import('../views/Projects.vue'),
   },
 ]
