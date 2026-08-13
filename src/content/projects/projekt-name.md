@@ -1,11 +1,13 @@
 ---
-title: Projekt-Name
+title: QA Dashboard
 description: Kurze Beschreibung, was das Projekt macht, für wen es gedacht ist und welches Problem es löst.
 cover: /images/projekt-name.jpg
-demoUrl: https://example.com
-repoUrl: https://github.com/thepaedu/projekt-name
+
+company: Firmenname GmbH
+companyLogo: /images/logos/bundesamt-fuer-gesundheit-logo.svg
+
 date: 2026-01-15
-tags: Vue, Node.js
+tags: Vue.js, Python FastAPI, Visual Basic Makro
 ---
 
 ## Worum geht es

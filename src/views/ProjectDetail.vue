@@ -28,7 +28,21 @@ useHead(() => ({
         class="cover"
       />
 
+      <div v-if="project.company || project.companyLogo" class="company">
+        <img
+          v-if="project.companyLogo"
+          :src="withBase(project.companyLogo)"
+          :alt="project.company ? `${project.company} Logo` : 'Firmenlogo'"
+          class="company-logo"
+        />
+
+        <span v-if="project.company">
+          Für {{ project.company }}
+        </span>
+      </div>
+
       <h1>{{ project.title }}</h1>
+
       <p v-if="project.description" class="lead">{{ project.description }}</p>
 
       <div class="tags" v-if="project.tags.length">
@@ -138,5 +152,20 @@ h1 {
   padding: 1rem;
   border-radius: var(--radius-sm);
   overflow-x: auto;
+}
+
+.company {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+}
+
+.company-logo {
+  width: 120px;
+  height: 60px;
+  object-fit: contain;
 }
 </style>

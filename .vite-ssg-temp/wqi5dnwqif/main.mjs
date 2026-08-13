@@ -203,12 +203,12 @@ const routes = [
   {
     path: "/blog",
     name: "blog",
-    component: () => import("./assets/Blog-CbW8gxto.js")
+    component: () => import("./assets/Blog-C8Kq27Ge.js")
   },
   {
     path: "/blog/:slug",
     name: "blog-post",
-    component: () => import("./assets/BlogPost-DtWowExw.js"),
+    component: () => import("./assets/BlogPost-Bt0ZfCmx.js"),
     props: true
   },
   {
@@ -219,7 +219,13 @@ const routes = [
   {
     path: "/projekte",
     name: "projects",
-    component: () => import("./assets/Projects-8MgCRsjE.js")
+    component: () => import("./assets/Projects-B46fNdrL.js")
+  },
+  {
+    path: "/projekte/:slug",
+    name: "project-detail",
+    component: () => import("./assets/ProjectDetail-C2d1lLoi.js"),
+    props: true
   }
 ];
 const createApp = ViteSSG(App, {

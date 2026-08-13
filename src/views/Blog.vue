@@ -77,8 +77,9 @@ h1 {
 }
 
 .cover {
+  display: block;
   width: 100%;
-  height: 160px;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   border-radius: var(--radius-md);
   margin-bottom: 1rem;
@@ -115,5 +116,20 @@ h2 {
   border-radius: 999px;
   border: 1px solid var(--glass-border);
   color: var(--ink-muted);
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .post-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .cover {
+    aspect-ratio: 16 / 9;
+  }
 }
 </style>

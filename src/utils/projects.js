@@ -22,6 +22,8 @@ function loadProjects() {
         title: data.title || slug,
         description: data.description || '',
         cover: data.cover || '',
+        company: data.company || '',
+        companyLogo: data.companyLogo || '',
         demoUrl: data.demoUrl || '',
         repoUrl: data.repoUrl || '',
         date: data.date || '',
