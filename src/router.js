@@ -30,4 +30,10 @@ export const routes = [
     name: 'projects',
     component: () => import('./views/Projects.vue'),
   },
+  {
+    path: '/projekte/:slug',
+    name: 'project-detail',
+    component: () => import('./views/ProjectDetail.vue'),
+    props: true,
+  },
 ]

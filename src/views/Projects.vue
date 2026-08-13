@@ -1,6 +1,6 @@
 <script setup>
 import { useHead } from '@unhead/vue'
-import { projects } from '../data/projects'
+import { projects } from '../utils/projects'
 import GlassCard from '../components/GlassCard.vue'
 import { withBase } from '../utils/url'
 
@@ -14,25 +14,33 @@ useHead({
   <div class="container page">
     <h1>Projekte</h1>
 
+    <p v-if="!projects.length" class="empty">
+      Noch keine Projekte – lege Markdown-Dateien unter
+      <code>src/content/projects</code> an.
+    </p>
+
     <div class="grid">
-      <GlassCard v-for="project in projects" :key="project.title" class="project">
-        <img v-if="project.cover" :src="withBase(project.cover)" :alt="project.title" class="cover" />
-        <h2>{{ project.title }}</h2>
-        <p class="desc">{{ project.description }}</p>
+      <router-link
+        v-for="project in projects"
+        :key="project.slug"
+        :to="{ name: 'project-detail', params: { slug: project.slug } }"
+        class="project-link"
+      >
+        <GlassCard class="project">
+          <img
+            v-if="project.cover"
+            :src="withBase(project.cover)"
+            :alt="project.title"
+            class="cover"
+          />
+          <h2>{{ project.title }}</h2>
+          <p class="desc">{{ project.description }}</p>
 
-        <div class="tags" v-if="project.tags?.length">
-          <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>
-        </div>
-
-        <div class="links">
-          <a v-if="project.demoUrl" :href="project.demoUrl" target="_blank" rel="noopener noreferrer" class="btn">
-            Live ansehen
-          </a>
-          <a v-if="project.repoUrl" :href="project.repoUrl" target="_blank" rel="noopener noreferrer" class="btn">
-            Quellcode
-          </a>
-        </div>
-      </GlassCard>
+          <div class="tags" v-if="project.tags?.length">
+            <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>
+          </div>
+        </GlassCard>
+      </router-link>
     </div>
   </div>
 </template>
@@ -47,10 +55,21 @@ h1 {
   margin-bottom: 2.5rem;
 }
 
+.empty {
+  text-align: center;
+  color: var(--ink-muted);
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
+}
+
+.project-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 .cover {
@@ -77,7 +96,6 @@ h2 {
   display: flex;
   gap: 0.4rem;
   flex-wrap: wrap;
-  margin-bottom: 1.25rem;
 }
 
 .tag {
@@ -86,11 +104,5 @@ h2 {
   border-radius: 999px;
   border: 1px solid var(--glass-border);
   color: var(--ink-muted);
-}
-
-.links {
-  display: flex;
-  gap: 0.6rem;
-  flex-wrap: wrap;
 }
 </style>
