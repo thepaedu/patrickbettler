@@ -72,6 +72,7 @@ useHead(() => ({
 .page {
   padding: 3rem 1.5rem 5rem;
   max-width: 760px;
+  box-sizing: border-box;
 }
 
 .back {
@@ -84,22 +85,29 @@ useHead(() => ({
 
 .article {
   padding: 2.5rem;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .cover {
+  display: block;
   width: 100%;
+  max-width: 100%;
+  height: auto;
   border-radius: var(--radius-md);
   margin-bottom: 1.25rem;
 }
 
 h1 {
   margin: 0 0 0.75rem;
+  overflow-wrap: anywhere;
 }
 
 .lead {
   color: var(--ink-muted);
   line-height: 1.6;
   margin: 0 0 1.25rem;
+  overflow-wrap: anywhere;
 }
 
 .tags {
@@ -125,8 +133,23 @@ h1 {
 }
 
 .content {
+  min-width: 0;
+  max-width: 100%;
   line-height: 1.75;
   color: var(--ink);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.content :deep(img) {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.content :deep(h2),
+.content :deep(h3) {
+  overflow-wrap: anywhere;
 }
 
 .content :deep(h2) {
@@ -136,6 +159,7 @@ h1 {
 
 .content :deep(a) {
   color: var(--teal);
+  overflow-wrap: anywhere;
 }
 
 .content :deep(p) {
@@ -152,6 +176,12 @@ h1 {
   padding: 1rem;
   border-radius: var(--radius-sm);
   overflow-x: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.content :deep(code) {
+  overflow-wrap: anywhere;
 }
 
 .company {
@@ -161,11 +191,75 @@ h1 {
   margin-bottom: 1rem;
   color: var(--ink-muted);
   font-size: 0.85rem;
+  flex-wrap: wrap;
 }
 
 .company-logo {
   width: 120px;
   height: 60px;
+  max-width: 100%;
   object-fit: contain;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .page {
+    padding: 2rem 0.75rem 3rem;
+  }
+
+  .back {
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .article {
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+  }
+
+  h1 {
+    font-size: 1.7rem;
+    line-height: 1.2;
+  }
+
+  .lead {
+    font-size: 0.95rem;
+  }
+
+  .company {
+    gap: 0.5rem;
+  }
+
+  .company-logo {
+    width: 90px;
+    height: 45px;
+  }
+
+  .links {
+    flex-direction: column;
+  }
+
+  .links .btn {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .content {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .content :deep(pre) {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .content :deep(ul),
+  .content :deep(ol) {
+    padding-left: 1.1rem;
+  }
 }
 </style>

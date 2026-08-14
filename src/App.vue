@@ -66,9 +66,7 @@ const navLinks = [
       </nav>
 
       <button class="burger" @click="menuOpen = !menuOpen" aria-label="Menü">
-        <span></span>
-        <span></span>
-        <span></span>
+        <img src="/src/assets/burger-simple.svg" alt="" />
       </button>
     </div>
   </header>
@@ -124,18 +122,18 @@ const navLinks = [
 
 .burger {
   display: none;
-  flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.25rem;
+  padding: 0.4rem;
 }
 
-.burger span {
-  width: 22px;
-  height: 2px;
-  background: var(--ink);
+.burger img {
+  display: block;
+  width: 24px;
+  height: 24px;
 }
 
 main {
