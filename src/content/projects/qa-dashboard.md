@@ -7,7 +7,7 @@ cover: /images/projekt-name.jpg
 projectLogo: /images/logos/qa-dashboard-logo.png
 
 company: Bundesamt für Gesundheit Sektion Umwelt Radioaktivität
-companyLogo: /images/logos/bundesamt-fuer-gesundheit-logo.png
+companyLogo: /images/logos/bundesamt-fuer-gesundheit-logo.jpg
 
 date: 2026-01-15
 tags: Vue.js, Python FastAPI, Visual Basic Makro

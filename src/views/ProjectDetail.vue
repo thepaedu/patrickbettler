@@ -23,70 +23,75 @@ useHead(() => ({
     </router-link>
 
     <article class="glass article">
-      <img
-        v-if="project.cover"
-        :src="withBase(project.cover)"
-        :alt="project.title"
-        class="cover"
-      />
-
-      <div v-if="project.company || project.companyLogo" class="company">
+      <div class="hero" v-if="project.cover">
         <img
-          v-if="project.companyLogo"
-          :src="withBase(project.companyLogo)"
-          :alt="project.company ? `${project.company} Logo` : 'Firmenlogo'"
-          class="company-logo"
+          :src="withBase(project.cover)"
+          :alt="project.title"
+          class="cover"
         />
-
-        <span v-if="project.company">
-          {{ project.company }}
-        </span>
-      </div>
-
-      <div class="project-header">
         <img
           v-if="project.projectLogo"
           :src="withBase(project.projectLogo)"
           :alt="`${project.title} Logo`"
-          class="project-logo"
+          class="project-logo-overlap"
         />
-
-        <h1>{{ project.title }}</h1>
       </div>
 
-      <p v-if="project.description" class="lead">
-        {{ project.description }}
-      </p>
+      <div class="body">
+        <div class="title-row">
+          <img
+            v-if="project.projectLogo && !project.cover"
+            :src="withBase(project.projectLogo)"
+            :alt="`${project.title} Logo`"
+            class="project-logo-inline"
+          />
+          <h1>{{ project.title }}</h1>
+        </div>
 
-      <div class="tags" v-if="project.tags.length">
-        <span v-for="tag in project.tags" :key="tag" class="tag">
-          {{ tag }}
-        </span>
+        <div v-if="project.company || project.companyLogo" class="company">
+          <img
+            v-if="project.companyLogo"
+            :src="withBase(project.companyLogo)"
+            :alt="project.company ? `${project.company} Logo` : 'Firmenlogo'"
+            class="company-logo"
+          />
+          <span v-if="project.company">bei {{ project.company }}</span>
+        </div>
+
+        <p v-if="project.description" class="lead">
+          {{ project.description }}
+        </p>
+
+        <div class="tags" v-if="project.tags.length">
+          <span v-for="tag in project.tags" :key="tag" class="tag">
+            {{ tag }}
+          </span>
+        </div>
+
+        <div class="links" v-if="project.demoUrl || project.repoUrl">
+          <a
+            v-if="project.demoUrl"
+            :href="project.demoUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn primary"
+          >
+            Live ansehen
+          </a>
+
+          <a
+            v-if="project.repoUrl"
+            :href="project.repoUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn"
+          >
+            Quellcode
+          </a>
+        </div>
+
+        <div class="content" v-html="project.html"></div>
       </div>
-
-      <div class="links" v-if="project.demoUrl || project.repoUrl">
-        <a
-          v-if="project.demoUrl"
-          :href="project.demoUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn primary"
-        >
-          Live ansehen
-        </a>
-
-        <a
-          v-if="project.repoUrl"
-          :href="project.repoUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn"
-        >
-          Quellcode
-        </a>
-      </div>
-
-      <div class="content" v-html="project.html"></div>
     </article>
   </div>
 
@@ -119,57 +124,84 @@ useHead(() => ({
 }
 
 .article {
-  padding: 2.5rem;
+  padding: 0 0 2.5rem;
   box-sizing: border-box;
   min-width: 0;
+  overflow: hidden;
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  line-height: 0;
 }
 
 .cover {
   display: block;
   width: 100%;
   max-width: 100%;
+  max-height: 340px;
   height: auto;
-  border-radius: var(--radius-md);
-  margin-bottom: 1.25rem;
+  object-fit: cover;
 }
 
-/* Firma */
+.project-logo-overlap {
+  position: absolute;
+  right: 2rem;
+  bottom: -32px;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  background: var(--bg, #fff);
+  border-radius: var(--radius-md);
+  padding: 0.4rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+}
+
+.body {
+  padding: 2.5rem;
+  padding-top: 3rem;
+  box-sizing: border-box;
+}
+
+/* Titel + Projekt-Logo (falls kein Cover) */
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+.project-logo-inline {
+  flex: 0 0 auto;
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+}
+
+.title-row h1 {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Firma als Meta-Zeile */
 .company {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
+  gap: 0.5rem;
   color: var(--ink-muted);
   font-size: 0.85rem;
+  margin-bottom: 1.25rem;
   flex-wrap: wrap;
 }
 
 .company-logo {
-  width: 120px;
-  height: 60px;
-  max-width: 100%;
+  width: 50px;
+  height: 50px;
   object-fit: contain;
-}
-
-/* Projekt */
-.project-header {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  margin-bottom: 0.75rem;
-}
-
-.project-logo {
-  flex: 0 0 auto;
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  border-radius: var(--radius-md);
-}
-
-.project-header h1 {
-  margin: 0;
-  overflow-wrap: anywhere;
+  border-radius: 4px;
 }
 
 .lead {
@@ -266,40 +298,46 @@ useHead(() => ({
   }
 
   .article {
-    padding: 1.25rem;
     border-radius: var(--radius-md);
   }
 
-  .company {
-    gap: 0.5rem;
+  .cover {
+    max-height: 220px;
   }
 
-  .company-logo {
-    width: 90px;
-    height: 45px;
+  .project-logo-overlap {
+    left: 1.25rem;
+    bottom: -24px;
+    width: 52px;
+    height: 52px;
   }
 
-  .project-header {
-    gap: 0.85rem;
+  .body {
+    padding: 1.25rem;
+    padding-top: 2.25rem;
   }
 
-  .project-logo {
-    width: 60px;
-    height: 60px;
+  .title-row {
+    gap: 0.75rem;
   }
 
-  .project-header h1 {
+  .project-logo-inline {
+    width: 44px;
+    height: 44px;
+  }
+
+  .title-row h1,
+  h1 {
     font-size: 1.7rem;
     line-height: 1.2;
+  }
+
+  .company {
+    font-size: 0.8rem;
   }
 
   .lead {
     font-size: 0.95rem;
-  }
-
-  h1 {
-    font-size: 1.7rem;
-    line-height: 1.2;
   }
 
   .links {
