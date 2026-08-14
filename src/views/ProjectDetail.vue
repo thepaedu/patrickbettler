@@ -37,23 +37,49 @@ useHead(() => ({
         />
 
         <span v-if="project.company">
-          Für {{ project.company }}
+          {{ project.company }}
         </span>
       </div>
 
-      <h1>{{ project.title }}</h1>
+      <div class="project-header">
+        <img
+          v-if="project.projectLogo"
+          :src="withBase(project.projectLogo)"
+          :alt="`${project.title} Logo`"
+          class="project-logo"
+        />
 
-      <p v-if="project.description" class="lead">{{ project.description }}</p>
+        <h1>{{ project.title }}</h1>
+      </div>
+
+      <p v-if="project.description" class="lead">
+        {{ project.description }}
+      </p>
 
       <div class="tags" v-if="project.tags.length">
-        <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>
+        <span v-for="tag in project.tags" :key="tag" class="tag">
+          {{ tag }}
+        </span>
       </div>
 
       <div class="links" v-if="project.demoUrl || project.repoUrl">
-        <a v-if="project.demoUrl" :href="project.demoUrl" target="_blank" rel="noopener noreferrer" class="btn primary">
+        <a
+          v-if="project.demoUrl"
+          :href="project.demoUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn primary"
+        >
           Live ansehen
         </a>
-        <a v-if="project.repoUrl" :href="project.repoUrl" target="_blank" rel="noopener noreferrer" class="btn">
+
+        <a
+          v-if="project.repoUrl"
+          :href="project.repoUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn"
+        >
           Quellcode
         </a>
       </div>
@@ -64,7 +90,9 @@ useHead(() => ({
 
   <div class="container page" v-else>
     <p>Dieses Projekt gibt es nicht (mehr).</p>
-    <router-link to="/projekte" class="back">&larr; Zurück zu den Projekten</router-link>
+    <router-link to="/projekte" class="back">
+      &larr; Zurück zu den Projekten
+    </router-link>
   </div>
 </template>
 
@@ -98,8 +126,42 @@ useHead(() => ({
   margin-bottom: 1.25rem;
 }
 
-h1 {
-  margin: 0 0 0.75rem;
+/* Firma */
+.company {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.company-logo {
+  width: 120px;
+  height: 60px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Projekt */
+.project-header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.project-logo {
+  flex: 0 0 auto;
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+}
+
+.project-header h1 {
+  margin: 0;
   overflow-wrap: anywhere;
 }
 
@@ -107,6 +169,23 @@ h1 {
   color: var(--ink-muted);
   line-height: 1.6;
   margin: 0 0 1.25rem;
+  overflow-wrap: anywhere;
+}
+
+.project-title {
+  min-width: 0;
+  flex: 1;
+}
+
+h1 {
+  margin: 0 0 0.5rem;
+  overflow-wrap: anywhere;
+}
+
+.lead {
+  color: var(--ink-muted);
+  line-height: 1.6;
+  margin: 0;
   overflow-wrap: anywhere;
 }
 
@@ -184,23 +263,6 @@ h1 {
   overflow-wrap: anywhere;
 }
 
-.company {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-  color: var(--ink-muted);
-  font-size: 0.85rem;
-  flex-wrap: wrap;
-}
-
-.company-logo {
-  width: 120px;
-  height: 60px;
-  max-width: 100%;
-  object-fit: contain;
-}
-
 /* Mobile */
 @media (max-width: 600px) {
   .page {
@@ -217,7 +279,25 @@ h1 {
     border-radius: var(--radius-md);
   }
 
-  h1 {
+  .company {
+    gap: 0.5rem;
+  }
+
+  .company-logo {
+    width: 90px;
+    height: 45px;
+  }
+
+  .project-header {
+    gap: 0.85rem;
+  }
+
+  .project-logo {
+    width: 60px;
+    height: 60px;
+  }
+
+  .project-header h1 {
     font-size: 1.7rem;
     line-height: 1.2;
   }
@@ -226,13 +306,13 @@ h1 {
     font-size: 0.95rem;
   }
 
-  .company {
-    gap: 0.5rem;
+  h1 {
+    font-size: 1.7rem;
+    line-height: 1.2;
   }
 
-  .company-logo {
-    width: 90px;
-    height: 45px;
+  .lead {
+    font-size: 0.95rem;
   }
 
   .links {

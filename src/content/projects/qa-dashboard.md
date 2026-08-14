@@ -3,8 +3,10 @@ title: QA Dashboard
 description: Kurze Beschreibung, was das Projekt macht, für wen es gedacht ist und welches Problem es löst.
 cover: /images/projekt-name.jpg
 
-company: Firmenname GmbH
-companyLogo: /images/logos/bundesamt-fuer-gesundheit-logo.svg
+projectLogo: /images/logos/qa-dashboard-logo.png
+
+company: Bundesamt für Gesundheit Sektion Umwelt Radioaktivität
+companyLogo: /images/logos/bundesamt-fuer-gesundheit-logo.png
 
 date: 2026-01-15
 tags: Vue.js, Python FastAPI, Visual Basic Makro

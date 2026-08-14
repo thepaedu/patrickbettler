@@ -22,6 +22,7 @@ function loadProjects() {
         title: data.title || slug,
         description: data.description || '',
         cover: data.cover || '',
+        projectLogo: data.projectLogo || '',
         company: data.company || '',
         companyLogo: data.companyLogo || '',
         demoUrl: data.demoUrl || '',
