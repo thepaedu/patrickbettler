@@ -1,6 +1,7 @@
 ---
 title: QA Dashboard
-description: Kurze Beschreibung, was das Projekt macht, für wen es gedacht ist und welches Problem es löst.
+description: Dashbord zur Überwachung der Detektoren-Qualitätssicherung
+ 
 cover: /images/projekt-name.jpg
 
 projectLogo: /images/logos/qa-dashboard-logo.png
@@ -14,8 +15,7 @@ tags: Vue.js, Python FastAPI, Visual Basic Makro
 
 ## Worum geht es
 
-Hier beschreibst du im Detail, wie das Projekt entstanden ist, welches
-Problem es löst und für wen es gedacht ist.
+Für die Qualitätssicherung von Germanium-Detektoren zur Messung von Gammastrahlung habe ich ein webbasiertes QA Dashboard entwickelt. Ein eigens entwickeltes Makro überträgt die Messdaten aus der Software InterWinner automatisch an eine Python FastAPI-Schnittstelle. Das von mir entwickelte UI visualisiert diese Daten übersichtlich in Grafiken und ermöglicht dadurch eine schnelle und intuitive Beurteilung der Messqualität sowie das Erkennen von Abweichungen.
 
 ## Tech-Stack
 

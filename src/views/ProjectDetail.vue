@@ -18,7 +18,9 @@ useHead(() => ({
 
 <template>
   <div class="container page" v-if="project">
-    <router-link to="/projekte" class="back">&larr; Zurück zu den Projekten</router-link>
+    <router-link to="/projekte" class="back">
+      &larr; Zurück zu den Projekten
+    </router-link>
 
     <article class="glass article">
       <img
@@ -90,6 +92,7 @@ useHead(() => ({
 
   <div class="container page" v-else>
     <p>Dieses Projekt gibt es nicht (mehr).</p>
+
     <router-link to="/projekte" class="back">
       &larr; Zurück zu den Projekten
     </router-link>
@@ -100,15 +103,19 @@ useHead(() => ({
 .page {
   padding: 3rem 1.5rem 5rem;
   max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
   box-sizing: border-box;
 }
 
 .back {
-  display: inline-block;
-  margin-bottom: 1.5rem;
+  display: block;
+  width: fit-content;
+  margin: 0 0 1.5rem 0;
   color: var(--gold);
   text-decoration: none;
   font-size: 0.9rem;
+  text-align: left;
 }
 
 .article {
@@ -169,23 +176,6 @@ useHead(() => ({
   color: var(--ink-muted);
   line-height: 1.6;
   margin: 0 0 1.25rem;
-  overflow-wrap: anywhere;
-}
-
-.project-title {
-  min-width: 0;
-  flex: 1;
-}
-
-h1 {
-  margin: 0 0 0.5rem;
-  overflow-wrap: anywhere;
-}
-
-.lead {
-  color: var(--ink-muted);
-  line-height: 1.6;
-  margin: 0;
   overflow-wrap: anywhere;
 }
 
@@ -270,8 +260,9 @@ h1 {
   }
 
   .back {
-    margin-bottom: 1rem;
+    margin: 0 0 1rem 0;
     font-size: 0.85rem;
+    text-align: left;
   }
 
   .article {
@@ -309,10 +300,6 @@ h1 {
   h1 {
     font-size: 1.7rem;
     line-height: 1.2;
-  }
-
-  .lead {
-    font-size: 0.95rem;
   }
 
   .links {

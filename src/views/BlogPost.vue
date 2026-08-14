@@ -27,22 +27,42 @@ function formatDate(date) {
 
 <template>
   <div class="container page" v-if="post">
-    <router-link to="/blog" class="back">&larr; Zurück zum Blog</router-link>
+    <router-link to="/blog" class="back">
+      &larr; Zurück zum Blog
+    </router-link>
 
     <article class="glass article">
-      <img v-if="post.cover" :src="withBase(post.cover)" :alt="post.title" class="cover" />
+      <img
+        v-if="post.cover"
+        :src="withBase(post.cover)"
+        :alt="post.title"
+        class="cover"
+      />
+
       <time class="date">{{ formatDate(post.date) }}</time>
+
       <h1>{{ post.title }}</h1>
+
       <div class="tags" v-if="post.tags.length">
-        <span v-for="tag in post.tags" :key="tag" class="tag">{{ tag }}</span>
+        <span
+          v-for="tag in post.tags"
+          :key="tag"
+          class="tag"
+        >
+          {{ tag }}
+        </span>
       </div>
+
       <div class="content" v-html="post.html"></div>
     </article>
   </div>
 
   <div class="container page" v-else>
     <p>Diesen Beitrag gibt es nicht (mehr).</p>
-    <router-link to="/blog" class="back">&larr; Zurück zum Blog</router-link>
+
+    <router-link to="/blog" class="back">
+      &larr; Zurück zum Blog
+    </router-link>
   </div>
 </template>
 
@@ -50,19 +70,25 @@ function formatDate(date) {
 .page {
   padding: 3rem 1.5rem 5rem;
   max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
 .back {
-  display: inline-block;
-  margin-bottom: 1.5rem;
+  display: block;
+  width: fit-content;
+  margin: 0 0 1.5rem 0;
   color: var(--gold);
   text-decoration: none;
   font-size: 0.9rem;
+  text-align: left;
 }
 
 .article {
   padding: 2.5rem;
   min-width: 0;
+  box-sizing: border-box;
 }
 
 .cover {
@@ -168,8 +194,9 @@ h1 {
   }
 
   .back {
-    margin: 0 0 1rem 0.15rem;
+    margin: 0 0 1rem 0;
     font-size: 0.85rem;
+    text-align: left;
   }
 
   .article {
