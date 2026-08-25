@@ -140,7 +140,6 @@ useHead(() => ({
   display: block;
   width: 100%;
   max-width: 100%;
-  max-height: 340px;
   height: auto;
   object-fit: cover;
 }
