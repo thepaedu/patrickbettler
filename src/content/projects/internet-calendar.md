@@ -2,7 +2,7 @@
 title: Pfändungsvollzugs-Termine Internet-Kalender 
 description: Abonnierbarer Internet-Kalender für Pfändungsvollzugs-Termine
  
-cover: /images/abonnierbarer-internet-kalender-1.png
+cover: /images/platzhalter.jpg
 
 company: BK Solution AG
 companyLogo: /images/logos/bk-solution-ag-logo.jpg

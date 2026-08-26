@@ -2,7 +2,7 @@
 title: QA Dashboard
 description: Dashbord zur Überwachung der Detektoren-Qualitätssicherung
  
-cover: /images/qa-dashboard.jpg
+cover: /images/platzhalter.jpg
 
 projectLogo: /images/logos/qa-dashboard-logo.png
 
