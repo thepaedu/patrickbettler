@@ -28,7 +28,11 @@ export default defineConfig({
   plugins: [vue()],
   ssgOptions: {
     includedRoutes(paths) {
-      return [...paths, ...blogSlugRoutes, ...projectSlugRoutes]
+      // Die generischen ":slug"-Platzhalter müssen raus, sonst versucht
+      // vite-ssg zusätzlich "/blog/:slug" und "/projekte/:slug" wörtlich
+      // zu prerendern -> ENOENT-Fehler beim Schreiben von ":slug.html".
+      const staticPaths = paths.filter((p) => !p.includes(':'))
+      return [...staticPaths, ...blogSlugRoutes, ...projectSlugRoutes]
     },
   },
 })
