@@ -1,0 +1,1 @@
+import{_ as e,c,f as a,p as o}from"./app-CWEkcTLc.js";const r={},t={class:"glass-card glass"};function n(s,d){return a(),c("div",t,[o(s.$slots,"default",{},void 0)])}const l=e(r,[["render",n],["__scopeId","data-v-76ccb778"]]);export{l as G};
