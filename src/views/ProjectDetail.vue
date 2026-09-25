@@ -305,7 +305,6 @@ useHead(() => ({
   }
 
   .project-logo-overlap {
-    left: 1.25rem;
     bottom: -24px;
     width: 52px;
     height: 52px;

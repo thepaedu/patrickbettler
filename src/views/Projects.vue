@@ -66,6 +66,13 @@ h1 {
   gap: 1.5rem;
 }
 
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
 .project-link {
   text-decoration: none;
   color: inherit;
