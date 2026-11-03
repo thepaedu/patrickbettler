@@ -17,82 +17,87 @@ useHead(() => ({
 </script>
 
 <template>
-  <div class="container page" v-if="project">
-    <router-link to="/projekte" class="back">
-      &larr; Zurück zu den Projekten
-    </router-link>
+  <div v-if="project">
+    <div class="hero" v-if="project.cover">
+      <img
+        :src="withBase(project.cover)"
+        :alt="project.title"
+        class="cover"
+      />
+      <router-link to="/projekte" class="back back-overlay">
+        &larr; Zurück zu den Projekten
+      </router-link>
+      <img
+        v-if="project.projectLogo"
+        :src="withBase(project.projectLogo)"
+        :alt="`${project.title} Logo`"
+        class="project-logo-overlap"
+      />
+    </div>
 
-    <article class="glass article">
-      <div class="hero" v-if="project.cover">
-        <img
-          :src="withBase(project.cover)"
-          :alt="project.title"
-          class="cover"
-        />
-        <img
-          v-if="project.projectLogo"
-          :src="withBase(project.projectLogo)"
-          :alt="`${project.title} Logo`"
-          class="project-logo-overlap"
-        />
-      </div>
+    <div class="container page">
+      <router-link v-if="!project.cover" to="/projekte" class="back">
+        &larr; Zurück zu den Projekten
+      </router-link>
 
-      <div class="body">
-        <div class="title-row">
-          <img
-            v-if="project.projectLogo && !project.cover"
-            :src="withBase(project.projectLogo)"
-            :alt="`${project.title} Logo`"
-            class="project-logo-inline"
-          />
-          <h1>{{ project.title }}</h1>
+      <article class="article" :class="{ 'has-hero': project.cover }">
+        <div class="body">
+          <div class="title-row">
+            <img
+              v-if="project.projectLogo && !project.cover"
+              :src="withBase(project.projectLogo)"
+              :alt="`${project.title} Logo`"
+              class="project-logo-inline"
+            />
+            <h1>{{ project.title }}</h1>
+          </div>
+
+          <div v-if="project.company || project.companyLogo" class="company">
+            <img
+              v-if="project.companyLogo"
+              :src="withBase(project.companyLogo)"
+              :alt="project.company ? `${project.company} Logo` : 'Firmenlogo'"
+              class="company-logo"
+            />
+            <span v-if="project.company">bei {{ project.company }}</span>
+          </div>
+
+          <p v-if="project.description" class="lead">
+            {{ project.description }}
+          </p>
+
+          <div class="tags" v-if="project.tags.length">
+            <span v-for="tag in project.tags" :key="tag" class="tag">
+              {{ tag }}
+            </span>
+          </div>
+
+          <div class="links" v-if="project.demoUrl || project.repoUrl">
+            <a
+              v-if="project.demoUrl"
+              :href="project.demoUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn primary"
+            >
+              Live ansehen
+            </a>
+
+            <a
+              v-if="project.repoUrl"
+              :href="project.repoUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn"
+            >
+              Quellcode
+            </a>
+          </div>
+
+          <div class="content" v-html="project.html"></div>
         </div>
-
-        <div v-if="project.company || project.companyLogo" class="company">
-          <img
-            v-if="project.companyLogo"
-            :src="withBase(project.companyLogo)"
-            :alt="project.company ? `${project.company} Logo` : 'Firmenlogo'"
-            class="company-logo"
-          />
-          <span v-if="project.company">bei {{ project.company }}</span>
-        </div>
-
-        <p v-if="project.description" class="lead">
-          {{ project.description }}
-        </p>
-
-        <div class="tags" v-if="project.tags.length">
-          <span v-for="tag in project.tags" :key="tag" class="tag">
-            {{ tag }}
-          </span>
-        </div>
-
-        <div class="links" v-if="project.demoUrl || project.repoUrl">
-          <a
-            v-if="project.demoUrl"
-            :href="project.demoUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn primary"
-          >
-            Live ansehen
-          </a>
-
-          <a
-            v-if="project.repoUrl"
-            :href="project.repoUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn"
-          >
-            Quellcode
-          </a>
-        </div>
-
-        <div class="content" v-html="project.html"></div>
-      </div>
-    </article>
+      </article>
+    </div>
   </div>
 
   <div class="container page" v-else>
@@ -130,18 +135,39 @@ useHead(() => ({
   overflow: hidden;
 }
 
-/* Hero */
+.article.has-hero {
+  padding-top: 0;
+  margin-top: -3rem;
+}
+
+/* Hero: volle Breite, kein Abstand nach oben/seitlich */
 .hero {
   position: relative;
+  width: 100%;
   line-height: 0;
+  margin: 0;
 }
 
 .cover {
   display: block;
   width: 100%;
-  max-width: 100%;
-  height: auto;
+  height: 52vh;
+  min-height: 320px;
+  max-height: 560px;
   object-fit: cover;
+}
+
+.back-overlay {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  border-radius: var(--radius-md);
+  color: #fff;
+  z-index: 2;
 }
 
 .project-logo-overlap {
@@ -300,8 +326,21 @@ useHead(() => ({
     border-radius: var(--radius-md);
   }
 
+  .article.has-hero {
+    margin-top: -2rem;
+  }
+
   .cover {
-    max-height: 220px;
+    height: 32vh;
+    min-height: 200px;
+    max-height: 280px;
+  }
+
+  .back-overlay {
+    top: 1rem;
+    left: 1rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
   }
 
   .project-logo-overlap {

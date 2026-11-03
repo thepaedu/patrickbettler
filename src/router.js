@@ -36,4 +36,9 @@ export const routes = [
     component: () => import('./views/ProjectDetail.vue'),
     props: true,
   },
+  {
+    path: '/instagram-check',
+    name: 'instagram-check',
+    component: () => import('./views/InstagramCheck.vue'),
+  },
 ]

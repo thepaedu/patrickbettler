@@ -52,51 +52,6 @@ body {
   min-height: 100vh;
 }
 
-/* Ambiente: weiche, driftende Farbflecken hinter allem */
-.bg-blobs {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  background: radial-gradient(circle at 20% 20%, var(--bg-deep-2), var(--bg-deep) 60%);
-}
-
-.bg-blobs span {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.35;
-  animation: drift 22s ease-in-out infinite alternate;
-}
-
-.bg-blobs span:nth-child(1) {
-  width: 420px;
-  height: 420px;
-  top: -10%;
-  left: -8%;
-  background: var(--teal);
-  animation-delay: 0s;
-}
-
-.bg-blobs span:nth-child(2) {
-  width: 380px;
-  height: 380px;
-  bottom: -12%;
-  right: -6%;
-  background: var(--gold);
-  animation-delay: -8s;
-}
-
-.bg-blobs span:nth-child(3) {
-  width: 300px;
-  height: 300px;
-  top: 40%;
-  left: 55%;
-  background: #6a7fd4;
-  opacity: 0.2;
-  animation-delay: -14s;
-}
-
 @keyframes drift {
   from {
     transform: translate(0, 0) scale(1);

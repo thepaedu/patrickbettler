@@ -44,12 +44,6 @@ const navLinks = [
 </script>
 
 <template>
-  <div class="bg-blobs" aria-hidden="true">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-
   <header class="navbar glass">
     <div class="navbar-inner container">
       <router-link to="/" class="brand">Patrick Bettler</router-link>
