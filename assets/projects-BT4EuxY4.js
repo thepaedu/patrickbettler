@@ -1,4 +1,4 @@
-import{p as s,M as i}from"./frontmatter-BEPeEzVZ.js";const d=`---\r
+import{p as s,M as i}from"./frontmatter-5Mjlf74t.js";const d=`---\r
 title: Pfändungsvollzugs-Termine Internet-Kalender \r
 description: Abonnierbarer Internet-Kalender für Pfändungsvollzugs-Termine\r
  \r

@@ -1,4 +1,4 @@
-import{p as s,M as l}from"./frontmatter-BEPeEzVZ.js";const c=`---\r
+import{p as s,M as l}from"./frontmatter-5Mjlf74t.js";const c=`---\r
 title: Geschafft – Ausbildung zum Informatiker EFZ abgeschlossen\r
 date: 2026-08-11\r
 excerpt: Nach vier Jahren Ausbildung zum Informatiker Applikationsentwicklung EFZ und bestandener Berufsmaturität ein Rückblick und Dank an alle, die mich begleitet haben.\r
