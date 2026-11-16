@@ -1,0 +1,1 @@
+import{A as r}from"./DM4kiF5i.js";function o(s){if(!s||/^https?:\/\//.test(s))return s;const t=r().app.baseURL||"/",e=t.endsWith("/")?t.slice(0,-1):t,i=s.startsWith("/")?s:`/${s}`;return`${e}${i}`}export{o as w};
