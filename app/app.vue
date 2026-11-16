@@ -35,6 +35,31 @@ useHead({
 })
 
 const menuOpen = ref(false)
+
+// Höhe der Navigation (inkl. Abstand oben) als CSS-Variable --nav-offset
+// bereitstellen. Seiten mit Vollbild-Hero (z.B. Projekt-Detail) ziehen ihr
+// Bild damit genau hinter die Navigation. Der ResizeObserver hält den Wert
+// aktuell, wenn sich die Nav-Höhe ändert (z.B. Mobile ↔ Desktop).
+const navRef = ref(null)
+let navObserver
+
+function updateNavOffset() {
+  const el = navRef.value
+  if (!el) return
+  const marginTop = parseFloat(getComputedStyle(el).marginTop) || 0
+  document.documentElement.style.setProperty(
+    '--nav-offset',
+    `${el.offsetHeight + marginTop}px`,
+  )
+}
+
+onMounted(() => {
+  updateNavOffset()
+  navObserver = new ResizeObserver(updateNavOffset)
+  navObserver.observe(navRef.value)
+})
+
+onBeforeUnmount(() => navObserver?.disconnect())
 const navLinks = [
   { to: '/', label: 'Home' },
   { to: '/blog', label: 'Blog' },
@@ -44,7 +69,7 @@ const navLinks = [
 </script>
 
 <template>
-  <header class="navbar glass">
+  <header ref="navRef" class="navbar glass">
     <div class="navbar-inner container">
       <NuxtLink to="/" class="brand">Patrick Bettler</NuxtLink>
 
@@ -71,6 +96,12 @@ const navLinks = [
 </template>
 
 <style>
+/* Startwert für --nav-offset, bis JavaScript die echte Höhe gemessen hat
+   (1rem Abstand oben + ca. 3rem Navigation auf Desktop). */
+:root {
+  --nav-offset: 4rem;
+}
+
 /* Seitenwechsel-Animation (app.pageTransition in nuxt.config.ts).
    Muss global sein, weil Nuxt die Klassen auf die Seitenkomponenten setzt. */
 .fade-enter-active,

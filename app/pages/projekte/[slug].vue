@@ -135,26 +135,29 @@ useHead({
   margin-top: -3rem;
 }
 
-/* Hero: volle Breite, kein Abstand nach oben/seitlich */
+/* Hero: volle Breite, beginnt ganz oben hinter der (sticky) Navigation.
+   --nav-offset kommt aus app.vue und entspricht der Höhe der Navigation
+   inkl. Abstand oben. Die Navigation hat z-index 40 und liegt daher darüber. */
 .hero {
   position: relative;
   width: 100%;
   line-height: 0;
-  margin: 0;
+  margin: calc(-1 * var(--nav-offset)) 0 0;
 }
 
+/* Bild um die Nav-Höhe grösser, damit der sichtbare Ausschnitt gleich bleibt */
 .cover {
   display: block;
   width: 100%;
-  height: 52vh;
-  min-height: 320px;
-  max-height: 560px;
+  height: calc(52vh + var(--nav-offset));
+  min-height: calc(320px + var(--nav-offset));
+  max-height: calc(560px + var(--nav-offset));
   object-fit: cover;
 }
 
 .back-overlay {
   position: absolute;
-  top: 1.5rem;
+  top: calc(var(--nav-offset) + 1.5rem);
   left: 1.5rem;
   margin: 0;
   padding: 0.5rem 1rem;
@@ -326,13 +329,13 @@ useHead({
   }
 
   .cover {
-    height: 32vh;
-    min-height: 200px;
-    max-height: 280px;
+    height: calc(32vh + var(--nav-offset));
+    min-height: calc(200px + var(--nav-offset));
+    max-height: calc(280px + var(--nav-offset));
   }
 
   .back-overlay {
-    top: 1rem;
+    top: calc(var(--nav-offset) + 1rem);
     left: 1rem;
     padding: 0.4rem 0.8rem;
     font-size: 0.85rem;
