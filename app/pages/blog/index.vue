@@ -1,22 +1,10 @@
 <script setup>
-import { useHead } from '@unhead/vue'
-import { posts } from '../utils/posts'
-import GlassCard from '../components/GlassCard.vue'
-import { withBase } from '../utils/url'
+import { posts } from '~/utils/posts'
 
 useHead({
   title: 'Blog – Patrick Bettler',
   meta: [{ name: 'description', content: 'Beiträge von Patrick Bettler.' }],
 })
-
-function formatDate(date) {
-  if (!date) return ''
-  return new Date(date).toLocaleDateString('de-CH', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-}
 </script>
 
 <template>
@@ -25,26 +13,26 @@ function formatDate(date) {
 
     <p v-if="!posts.length" class="empty">
       Noch keine Beiträge – lege Markdown-Dateien unter
-      <code>src/content/blog</code> an.
+      <code>content/blog</code> an.
     </p>
 
     <div class="post-grid">
-      <router-link
+      <NuxtLink
         v-for="post in posts"
         :key="post.slug"
-        :to="{ name: 'blog-post', params: { slug: post.slug } }"
+        :to="`/blog/${post.slug}`"
         class="post-link"
       >
         <GlassCard>
           <img v-if="post.cover" :src="withBase(post.cover)" :alt="post.title" class="cover" />
-          <time class="date">{{ formatDate(post.date) }}</time>
+          <time class="date">{{ formatPostDate(post.date) }}</time>
           <h2>{{ post.title }}</h2>
           <p class="excerpt">{{ post.excerpt }}</p>
           <div class="tags" v-if="post.tags.length">
             <span v-for="tag in post.tags" :key="tag" class="tag">{{ tag }}</span>
           </div>
         </GlassCard>
-      </router-link>
+      </NuxtLink>
     </div>
   </div>
 </template>

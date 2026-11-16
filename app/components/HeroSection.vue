@@ -1,7 +1,6 @@
 <script setup>
-import { onMounted, ref } from 'vue'
 import gsap from 'gsap'
-import profilbild from '../assets/patrick-bettler.jpg'
+import profilbild from '~/assets/patrick-bettler.jpg'
 
 const heroRef = ref(null)
 const avatarRef = ref(null)
@@ -10,6 +9,7 @@ const subtitleRef = ref(null)
 const ctaRef = ref(null)
 const glowRef = ref(null)
 
+// onMounted läuft nur im Browser, GSAP ist damit SSR-sicher.
 onMounted(() => {
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
 
@@ -62,9 +62,9 @@ onMounted(() => {
     </p>
 
     <div class="cta" ref="ctaRef">
-      <router-link class="btn primary" to="/projekte">Projekte ansehen</router-link>
-      <router-link class="btn" to="/blog">Zum Blog</router-link>
-      <router-link class="btn" to="/galerie">Galerie</router-link>
+      <NuxtLink class="btn primary" to="/projekte">Projekte ansehen</NuxtLink>
+      <NuxtLink class="btn" to="/blog">Zum Blog</NuxtLink>
+      <NuxtLink class="btn" to="/galerie">Galerie</NuxtLink>
     </div>
   </section>
 </template>

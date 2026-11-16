@@ -1,6 +1,5 @@
 <script setup>
 import { ref, shallowRef, computed } from 'vue'
-import { useHead } from '@unhead/vue'
 
 useHead({
   title: 'Instagram-Check – Patrick Bettler',

@@ -1,30 +1,30 @@
 <script setup>
-import { ref } from 'vue'
-import { useHead } from '@unhead/vue'
+import burgerIcon from '~/assets/burger-simple.svg'
 
-// Site-weite Defaults. Einzelne Seiten (Home, Blog, ...) überschreiben
-// nur title/description via ihr eigenes useHead(); diese Tags hier bleiben
-// auf jeder Seite bestehen.
+// Stabile URL statt des gehashten Vite-Dateinamens (…-BNCAPXrR.jpg):
+// Nuxt legt Assets unter /_nuxt/ mit neuem Hash ab, der alte Link wäre tot.
+// Dafür liegt eine Kopie des Profilbilds in public/images/.
+const siteUrl = 'https://thepaedu.github.io/patrickbettler/'
+const ogImage = `${siteUrl}images/patrick-bettler.jpg`
+
+// Site-weite Defaults. Einzelne Seiten überschreiben nur title/description.
 useHead({
   meta: [
     { property: 'og:title', content: 'Patrick Bettler' },
     { property: 'og:description', content: 'Offizielle Webseite von Patrick Bettler.' },
-    {
-      property: 'og:image',
-      content: 'https://thepaedu.github.io/patrickbettler/assets/patrick-bettler-BNCAPXrR.jpg',
-    },
+    { property: 'og:image', content: ogImage },
     { property: 'og:type', content: 'website' },
     { name: 'twitter:card', content: 'summary_large_image' },
   ],
   script: [
     {
       type: 'application/ld+json',
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'Person',
         name: 'Patrick Bettler',
-        url: 'https://thepaedu.github.io/patrickbettler/',
-        image: 'https://thepaedu.github.io/patrickbettler/assets/patrick-bettler-BNCAPXrR.jpg',
+        url: siteUrl,
+        image: ogImage,
         sameAs: [
           'https://www.instagram.com/patrick_bettler/',
           'https://github.com/thepaedu/patrickbettler/',
@@ -46,33 +46,42 @@ const navLinks = [
 <template>
   <header class="navbar glass">
     <div class="navbar-inner container">
-      <router-link to="/" class="brand">Patrick Bettler</router-link>
+      <NuxtLink to="/" class="brand">Patrick Bettler</NuxtLink>
 
       <nav class="nav-links" :class="{ open: menuOpen }">
-        <router-link
+        <NuxtLink
           v-for="link in navLinks"
           :key="link.to"
           :to="link.to"
           @click="menuOpen = false"
         >
           {{ link.label }}
-        </router-link>
+        </NuxtLink>
       </nav>
 
       <button class="burger" @click="menuOpen = !menuOpen" aria-label="Menü">
-        <img src="/src/assets/burger-simple.svg" alt="" />
+        <img :src="burgerIcon" alt="" />
       </button>
     </div>
   </header>
 
   <main>
-    <router-view v-slot="{ Component }">
-      <transition name="fade" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </router-view>
+    <NuxtPage />
   </main>
 </template>
+
+<style>
+/* Seitenwechsel-Animation (app.pageTransition in nuxt.config.ts).
+   Muss global sein, weil Nuxt die Klassen auf die Seitenkomponenten setzt. */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
 
 <style scoped>
 .navbar {
@@ -132,15 +141,6 @@ const navLinks = [
 
 main {
   min-height: 60vh;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.25s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
 
 @media (max-width: 640px) {

@@ -1,27 +1,21 @@
 {
-  "name": "patrick_bettler",
+  "name": "patrickbettler",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite-ssg build",
-    "preview": "vite preview",
-    "deploy": "gh-pages -d dist"
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "deploy": "nuxt generate && gh-pages -d .output/public --dotfiles --nojekyll"
   },
   "dependencies": {
-    "@unhead/vue": "^3.1.8",
-    "gsap": "^3.15.0",
+    "gsap": "^3.12.5",
     "jspdf": "^4.2.1",
-    "jszip": "^3.10.2",
-    "markdown-it": "^15.0.0",
-    "vite-ssg": "^28.3.0",
-    "vue": "^3.5.18",
-    "vue-router": "^4.6.4"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.1",
-    "gh-pages": "^6.3.0",
-    "vite": "^7.1.2"
+    "jszip": "^3.10.1",
+    "markdown-it": "^14.1.0",
+    "nuxt": "^4.1.0",
+    "vue": "^3.5.0"
   }
 }

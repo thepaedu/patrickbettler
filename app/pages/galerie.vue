@@ -1,9 +1,6 @@
 <script setup>
-import { ref, nextTick } from 'vue'
-import { useHead } from '@unhead/vue'
 import gsap from 'gsap'
-import { galleryImages } from '../data/gallery'
-import { withBase } from '../utils/url'
+import { galleryImages } from '~/data/gallery'
 
 useHead({
   title: 'Galerie – Patrick Bettler',
@@ -43,7 +40,7 @@ function closeImage() {
     <h1>Galerie</h1>
 
     <p v-if="!galleryImages.length" class="empty">
-      Noch keine Bilder – ergänze Einträge in <code>src/data/gallery.js</code>.
+      Noch keine Bilder – ergänze Einträge in <code>app/data/gallery.js</code>.
     </p>
 
     <div class="grid">

@@ -1,7 +1,4 @@
 <script setup>
-import { useHead } from '@unhead/vue'
-import HeroSection from '../components/HeroSection.vue'
-
 useHead({
   title: 'Patrick Bettler',
   meta: [{ name: 'description', content: 'Offizielle Webseite von Patrick Bettler.' }],

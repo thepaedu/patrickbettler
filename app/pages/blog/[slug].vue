@@ -1,35 +1,25 @@
 <script setup>
-import { computed } from 'vue'
-import { useHead } from '@unhead/vue'
-import { getPost } from '../utils/posts'
-import { withBase } from '../utils/url'
+import { getPost } from '~/utils/posts'
 
-const props = defineProps({
-  slug: { type: String, required: true },
+// Statt props: true aus dem alten Router kommt der Slug aus der Route.
+// Bewusst einmalig gelesen (nicht reaktiv): Beim Seitenwechsel mit Fade-Out
+// sieht die ausblendende Seite sonst schon die neue Route und würde kurz
+// "Diesen Beitrag gibt es nicht" anzeigen. Wechselt der Slug, baut Nuxt
+// die Seite ohnehin neu auf.
+const slug = String(useRoute().params.slug)
+const post = getPost(slug)
+
+useHead({
+  title: post ? `${post.title} – Patrick Bettler` : 'Beitrag nicht gefunden',
+  meta: [{ name: 'description', content: post?.excerpt || '' }],
 })
-
-const post = computed(() => getPost(props.slug))
-
-useHead(() => ({
-  title: post.value ? `${post.value.title} – Patrick Bettler` : 'Beitrag nicht gefunden',
-  meta: [{ name: 'description', content: post.value?.excerpt || '' }],
-}))
-
-function formatDate(date) {
-  if (!date) return ''
-  return new Date(date).toLocaleDateString('de-CH', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-}
 </script>
 
 <template>
   <div class="container page" v-if="post">
-    <router-link to="/blog" class="back">
+    <NuxtLink to="/blog" class="back">
       &larr; Zurück zum Blog
-    </router-link>
+    </NuxtLink>
 
     <article class="glass article">
       <img
@@ -39,7 +29,7 @@ function formatDate(date) {
         class="cover"
       />
 
-      <time class="date">{{ formatDate(post.date) }}</time>
+      <time class="date">{{ formatPostDate(post.date) }}</time>
 
       <h1>{{ post.title }}</h1>
 
@@ -60,9 +50,9 @@ function formatDate(date) {
   <div class="container page" v-else>
     <p>Diesen Beitrag gibt es nicht (mehr).</p>
 
-    <router-link to="/blog" class="back">
+    <NuxtLink to="/blog" class="back">
       &larr; Zurück zum Blog
-    </router-link>
+    </NuxtLink>
   </div>
 </template>
 

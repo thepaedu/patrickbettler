@@ -1,8 +1,5 @@
 <script setup>
-import { useHead } from '@unhead/vue'
-import { projects } from '../utils/projects'
-import GlassCard from '../components/GlassCard.vue'
-import { withBase } from '../utils/url'
+import { projects } from '~/utils/projects'
 
 useHead({
   title: 'Projekte – Patrick Bettler',
@@ -16,14 +13,14 @@ useHead({
 
     <p v-if="!projects.length" class="empty">
       Noch keine Projekte – lege Markdown-Dateien unter
-      <code>src/content/projects</code> an.
+      <code>content/projects</code> an.
     </p>
 
     <div class="grid">
-      <router-link
+      <NuxtLink
         v-for="project in projects"
         :key="project.slug"
-        :to="{ name: 'project-detail', params: { slug: project.slug } }"
+        :to="`/projekte/${project.slug}`"
         class="project-link"
       >
         <GlassCard class="project">
@@ -40,7 +37,7 @@ useHead({
             <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>
           </div>
         </GlassCard>
-      </router-link>
+      </NuxtLink>
     </div>
   </div>
 </template>

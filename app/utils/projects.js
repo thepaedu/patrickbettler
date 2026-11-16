@@ -3,9 +3,8 @@ import { parseFrontmatter } from './frontmatter'
 
 const md = new MarkdownIt({ html: false, linkify: true, typographer: true })
 
-// Vite 5/6-Syntax für Raw-Imports. Falls dein Vite älter ist (v4 oder früher),
-// ersetze die Optionen durch: { eager: true, as: 'raw' }
-const modules = import.meta.glob('../content/projects/*.md', {
+// Die Markdown-Dateien liegen jetzt im Projekt-Root unter content/projects.
+const modules = import.meta.glob('../../content/projects/*.md', {
   eager: true,
   query: '?raw',
   import: 'default',

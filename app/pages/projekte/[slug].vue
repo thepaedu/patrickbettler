@@ -1,19 +1,14 @@
 <script setup>
-import { computed } from 'vue'
-import { useHead } from '@unhead/vue'
-import { getProject } from '../utils/projects'
-import { withBase } from '../utils/url'
+import { getProject } from '~/utils/projects'
 
-const props = defineProps({
-  slug: { type: String, required: true },
+// Slug einmalig lesen, Begründung siehe pages/blog/[slug].vue
+const slug = String(useRoute().params.slug)
+const project = getProject(slug)
+
+useHead({
+  title: project ? `${project.title} – Patrick Bettler` : 'Projekt nicht gefunden',
+  meta: [{ name: 'description', content: project?.description || '' }],
 })
-
-const project = computed(() => getProject(props.slug))
-
-useHead(() => ({
-  title: project.value ? `${project.value.title} – Patrick Bettler` : 'Projekt nicht gefunden',
-  meta: [{ name: 'description', content: project.value?.description || '' }],
-}))
 </script>
 
 <template>
@@ -24,9 +19,9 @@ useHead(() => ({
         :alt="project.title"
         class="cover"
       />
-      <router-link to="/projekte" class="back back-overlay">
+      <NuxtLink to="/projekte" class="back back-overlay">
         &larr; Zurück zu den Projekten
-      </router-link>
+      </NuxtLink>
       <img
         v-if="project.projectLogo"
         :src="withBase(project.projectLogo)"
@@ -36,9 +31,9 @@ useHead(() => ({
     </div>
 
     <div class="container page">
-      <router-link v-if="!project.cover" to="/projekte" class="back">
+      <NuxtLink v-if="!project.cover" to="/projekte" class="back">
         &larr; Zurück zu den Projekten
-      </router-link>
+      </NuxtLink>
 
       <article class="article" :class="{ 'has-hero': project.cover }">
         <div class="body">
@@ -103,9 +98,9 @@ useHead(() => ({
   <div class="container page" v-else>
     <p>Dieses Projekt gibt es nicht (mehr).</p>
 
-    <router-link to="/projekte" class="back">
+    <NuxtLink to="/projekte" class="back">
       &larr; Zurück zu den Projekten
-    </router-link>
+    </NuxtLink>
   </div>
 </template>
 
