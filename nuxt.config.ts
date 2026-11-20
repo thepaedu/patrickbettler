@@ -31,13 +31,31 @@ export default defineNuxtConfig({
     },
   },
 
+  vite: {
+    build: {
+      // three.js (STL-Viewer) ist ein grosser Brocken, wird aber nur auf
+      // /stl-viewer und erst beim Hochladen geladen → Warnung unnötig.
+      chunkSizeWarningLimit: 1000,
+    },
+  },
+
   nitro: {
     // legt u.a. die .nojekyll-Datei an, sonst ignoriert GitHub Pages den _nuxt-Ordner
     preset: 'github_pages',
     prerender: {
-      crawlLinks: true,
+      // Crawler aus: Er nahm die Links samt baseURL (/patrickbettler/...) als
+      // zusätzliche Routen auf und renderte jede Seite doppelt und gleichzeitig.
+      // Unter Windows führte das zu EPERM-Fehlern im Prerender-Cache.
+      // Stattdessen alle Seiten hier explizit auflisten. Neue Seite in
+      // app/pages/ anlegen → hier ergänzen. Blog/Projekte kommen automatisch.
+      crawlLinks: false,
       routes: [
         '/',
+        '/blog',
+        '/projekte',
+        '/galerie',
+        '/instagram-check',
+        '/stl-viewer',
         ...slugRoutes('./content/blog', '/blog'),
         ...slugRoutes('./content/projects', '/projekte'),
       ],
