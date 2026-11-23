@@ -1,0 +1,1 @@
+import{L as e,it as t,t as n,tt as r}from"./Va3HyCEc.js";var i={},a={class:`glass-card glass`};function o(n,i){return r(),e(`div`,a,[t(n.$slots,`default`,{},void 0,!0)])}var s=Object.assign(n(i,[[`render`,o],[`__scopeId`,`data-v-7b3409ef`]]),{__name:`GlassCard`});export{s as t};
