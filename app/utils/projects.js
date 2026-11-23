@@ -10,11 +10,31 @@ const modules = import.meta.glob('../../content/projects/*.md', {
   import: 'default',
 })
 
+// Bilder aus dem Frontmatter, kommagetrennt, optional mit Bildunterschrift nach "|":
+//   images: /images/app-1.jpg | Startseite, /images/app-2.jpg | Einstellungen
+// (Bildunterschriften deshalb ohne Komma schreiben.)
+function parseImages(value) {
+  if (!value) return []
+  return value
+    .split(',')
+    .map((entry) => entry.trim())
+    .filter(Boolean)
+    .map((entry) => {
+      const [src, ...caption] = entry.split('|')
+      return { src: src.trim(), caption: caption.join('|').trim() }
+    })
+}
+
 function loadProjects() {
   return Object.entries(modules)
     .map(([path, raw]) => {
       const slug = path.split('/').pop().replace(/\.md$/, '')
       const { data, content } = parseFrontmatter(raw)
+
+      // Die Überschrift "Worum geht es" setzt die Detailseite selbst (zusammen
+      // mit der description). Steht sie am Anfang des Markdowns, hier entfernen,
+      // damit sie nicht doppelt erscheint.
+      const body = content.replace(/^\s*##\s+Worum geht es\s*\r?\n/i, '')
 
       return {
         slug,
@@ -28,7 +48,8 @@ function loadProjects() {
         repoUrl: data.repoUrl || '',
         date: data.date || '',
         tags: data.tags ? data.tags.split(',').map((t) => t.trim()) : [],
-        html: md.render(content),
+        images: parseImages(data.images),
+        html: md.render(body),
       }
     })
     // neueste zuerst, Projekte ohne Datum landen am Ende

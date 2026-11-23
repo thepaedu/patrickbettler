@@ -19,9 +19,6 @@ useHead({
         :alt="project.title"
         class="cover"
       />
-      <NuxtLink to="/projekte" class="back back-overlay">
-        &larr; Zurück zu den Projekten
-      </NuxtLink>
       <img
         v-if="project.projectLogo"
         :src="withBase(project.projectLogo)"
@@ -30,8 +27,15 @@ useHead({
       />
     </div>
 
-    <div class="container page">
-      <NuxtLink v-if="!project.cover" to="/projekte" class="back">
+    <!-- Mit Titelbild: Zurück-Link direkt unter dem Bild, ganz links -->
+    <div v-if="project.cover" class="back-bar back-project">
+      <NuxtLink to="/projekte" class="back">
+        &larr; Zurück zu den Projekten
+      </NuxtLink>
+    </div>
+
+    <div class="container page" :class="{ 'after-hero': project.cover }">
+      <NuxtLink v-if="!project.cover" to="/projekte" class="back back-project">
         &larr; Zurück zu den Projekten
       </NuxtLink>
 
@@ -56,10 +60,6 @@ useHead({
             />
             <span v-if="project.company">bei {{ project.company }}</span>
           </div>
-
-          <p v-if="project.description" class="lead">
-            {{ project.description }}
-          </p>
 
           <div class="tags" v-if="project.tags.length">
             <span v-for="tag in project.tags" :key="tag" class="tag">
@@ -89,7 +89,19 @@ useHead({
             </a>
           </div>
 
+          <!-- description und "Worum geht es" als ein gemeinsamer Abschnitt -->
+          <section v-if="project.description" class="content">
+            <h2>Worum geht es</h2>
+            <p class="lead">{{ project.description }}</p>
+          </section>
+
           <div class="content" v-html="project.html"></div>
+
+          <ProjectGallery
+            v-if="project.images.length"
+            :images="project.images"
+            :title="project.title"
+          />
         </div>
       </article>
     </div>
@@ -124,15 +136,36 @@ useHead({
 }
 
 .article {
+  /* style.css zentriert global (#app) – Projekttexte linksbündig */
+  text-align: left;
   padding: 0 0 2.5rem;
   box-sizing: border-box;
   min-width: 0;
   overflow: hidden;
 }
 
+/* Zurück-Link unter dem Titelbild: ganz links, gleicher Seitenabstand
+   wie früher auf dem Bild (1.5rem) */
+.back-bar {
+  /* über dem Artikel, der leicht nach oben gezogen ist → Link bleibt klickbar */
+  position: relative;
+  z-index: 1;
+  padding: 1.5rem 1.5rem 0;
+}
+
+.back-bar .back {
+  margin: 0;
+}
+
+/* Titel ca. 2rem unter dem Link (body hat oben 3rem Platz für das
+   überlappende Projekt-Logo) */
+.page.after-hero {
+  padding-top: 0;
+}
+
 .article.has-hero {
   padding-top: 0;
-  margin-top: -3rem;
+  margin-top: -1rem;
 }
 
 /* Hero: volle Breite, beginnt ganz oben hinter der (sticky) Navigation.
@@ -155,18 +188,6 @@ useHead({
   object-fit: cover;
 }
 
-.back-overlay {
-  position: absolute;
-  top: calc(var(--nav-offset) + 1.5rem);
-  left: 1.5rem;
-  margin: 0;
-  padding: 0.5rem 1rem;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(4px);
-  border-radius: var(--radius-md);
-  color: #fff;
-  z-index: 2;
-}
 
 .project-logo-overlap {
   position: absolute;
@@ -228,9 +249,10 @@ useHead({
 }
 
 .lead {
-  color: var(--ink-muted);
+  color: var(--ink);
+  font-size: 1.05rem;
   line-height: 1.6;
-  margin: 0 0 1.25rem;
+  margin: 1rem 0 0;
   overflow-wrap: anywhere;
 }
 
@@ -314,6 +336,11 @@ useHead({
     padding: 2rem 0.75rem 3rem;
   }
 
+  /* Auf dem Handy führt das Menü zurück – Button würde nur Platz kosten */
+  .back-project {
+    display: none;
+  }
+
   .back {
     margin: 0 0 1rem 0;
     font-size: 0.85rem;
@@ -322,6 +349,10 @@ useHead({
 
   .article {
     border-radius: var(--radius-md);
+  }
+
+  .page.after-hero {
+    padding-top: 2rem;
   }
 
   .article.has-hero {
@@ -334,12 +365,6 @@ useHead({
     max-height: calc(280px + var(--nav-offset));
   }
 
-  .back-overlay {
-    top: calc(var(--nav-offset) + 1rem);
-    left: 1rem;
-    padding: 0.4rem 0.8rem;
-    font-size: 0.85rem;
-  }
 
   .project-logo-overlap {
     bottom: -24px;

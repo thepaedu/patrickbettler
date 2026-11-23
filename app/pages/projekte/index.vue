@@ -31,7 +31,6 @@ useHead({
             class="cover"
           />
           <h2>{{ project.title }}</h2>
-          <p class="desc">{{ project.description }}</p>
 
           <div class="tags" v-if="project.tags?.length">
             <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>
@@ -85,15 +84,8 @@ h1 {
 }
 
 h2 {
-  margin: 0 0 0.6rem;
-  font-size: 1.2rem;
-}
-
-.desc {
-  color: var(--ink-muted);
-  font-size: 0.9rem;
-  line-height: 1.55;
   margin: 0 0 1rem;
+  font-size: 1.2rem;
 }
 
 .tags {
