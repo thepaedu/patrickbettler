@@ -53,13 +53,49 @@ function updateNavOffset() {
   )
 }
 
+// ---------------------------------------------------------------------------
+// Mobiles Vollbild-Menü
+// ---------------------------------------------------------------------------
+
+const route = useRoute()
+
+// Beim Seitenwechsel schliessen (auch bei Zurück/Vor im Browser)
+watch(() => route.fullPath, () => {
+  menuOpen.value = false
+})
+
+// Seite dahinter nicht scrollen lassen, solange das Menü offen ist
+watch(menuOpen, (open) => {
+  document.documentElement.classList.toggle('menu-open', open)
+})
+
+function onKeydown(event) {
+  if (event.key === 'Escape') menuOpen.value = false
+}
+
+// Wird das Fenster breiter als die Mobile-Ansicht, Menü schliessen
+let desktopQuery
+function onDesktopChange(event) {
+  if (event.matches) menuOpen.value = false
+}
+
 onMounted(() => {
   updateNavOffset()
   navObserver = new ResizeObserver(updateNavOffset)
   navObserver.observe(navRef.value)
+
+  window.addEventListener('keydown', onKeydown)
+  desktopQuery = window.matchMedia('(min-width: 641px)')
+  desktopQuery.addEventListener('change', onDesktopChange)
 })
 
-onBeforeUnmount(() => navObserver?.disconnect())
+onBeforeUnmount(() => {
+  navObserver?.disconnect()
+  window.removeEventListener('keydown', onKeydown)
+  desktopQuery?.removeEventListener('change', onDesktopChange)
+  document.documentElement.classList.remove('menu-open')
+})
+
 const navLinks = [
   { to: '/', label: 'Home' },
   { to: '/blog', label: 'Blog' },
@@ -73,22 +109,57 @@ const navLinks = [
     <div class="navbar-inner container">
       <NuxtLink to="/" class="brand">Patrick Bettler</NuxtLink>
 
-      <nav class="nav-links" :class="{ open: menuOpen }">
-        <NuxtLink
-          v-for="link in navLinks"
-          :key="link.to"
-          :to="link.to"
-          @click="menuOpen = false"
-        >
+      <!-- Desktop-Navigation -->
+      <nav class="nav-links" aria-label="Hauptnavigation">
+        <NuxtLink v-for="link in navLinks" :key="link.to" :to="link.to">
           {{ link.label }}
         </NuxtLink>
       </nav>
 
-      <button class="burger" @click="menuOpen = !menuOpen" aria-label="Menü">
-        <img :src="burgerIcon" alt="" />
+      <!-- Burger (nur Mobile): wird zum X, solange das Menü offen ist -->
+      <button
+        class="burger"
+        type="button"
+        :aria-label="menuOpen ? 'Menü schliessen' : 'Menü öffnen'"
+        :aria-expanded="menuOpen"
+        aria-controls="mobile-menu"
+        @click="menuOpen = !menuOpen"
+      >
+        <svg
+          v-if="menuOpen"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+        <img v-else :src="burgerIcon" alt="" />
       </button>
     </div>
   </header>
+
+  <!-- Mobiles Vollbild-Menü. Bewusst AUSSERHALB des <header>: Der Glas-Effekt
+       (backdrop-filter) der Navigation würde position: fixed sonst auf die
+       Navigation statt auf den ganzen Bildschirm beziehen. -->
+  <Transition name="menu">
+    <nav
+      v-if="menuOpen"
+      id="mobile-menu"
+      class="mobile-menu"
+      aria-label="Hauptnavigation"
+    >
+      <ul>
+        <li v-for="(link, i) in navLinks" :key="link.to" :style="{ '--i': i }">
+          <NuxtLink :to="link.to" @click="menuOpen = false">
+            {{ link.label }}
+          </NuxtLink>
+        </li>
+      </ul>
+    </nav>
+  </Transition>
 
   <main>
     <NuxtPage />
@@ -100,6 +171,11 @@ const navLinks = [
    (1rem Abstand oben + ca. 3rem Navigation auf Desktop). */
 :root {
   --nav-offset: 4rem;
+}
+
+/* Solange das mobile Menü offen ist, scrollt die Seite dahinter nicht */
+html.menu-open {
+  overflow: hidden;
 }
 
 /* Seitenwechsel-Animation (app.pageTransition in nuxt.config.ts).
@@ -119,6 +195,8 @@ const navLinks = [
   position: sticky;
   top: 1rem;
   margin: 1rem auto 0;
+  /* Immer 1rem Abstand links und rechts, auch auf schmalen Bildschirmen */
+  width: calc(100% - 2rem);
   max-width: var(--container-w);
   border-radius: var(--radius-lg);
   z-index: 40;
@@ -174,26 +252,96 @@ main {
   min-height: 60vh;
 }
 
+/* Mobiles Vollbild-Menü: liegt unter der Navigation (z-index 40),
+   damit Logo und X-Button sichtbar und bedienbar bleiben. */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 39;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--nav-offset) + 1rem) 1.5rem 2rem;
+  background: rgba(8, 11, 14, 0.92);
+  backdrop-filter: blur(var(--glass-blur, 16px));
+  -webkit-backdrop-filter: blur(var(--glass-blur, 16px));
+  overflow-y: auto;
+}
+
+.mobile-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.mobile-menu a {
+  font-size: clamp(1.75rem, 8vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  color: var(--ink);
+  transition: color 0.2s ease;
+}
+
+.mobile-menu a:hover,
+.mobile-menu a.router-link-active {
+  color: var(--gold);
+}
+
+/* Ein- und Ausblenden: Hintergrund blendet, Links gleiten nacheinander herein */
+.menu-enter-active,
+.menu-leave-active {
+  transition: opacity 0.25s ease;
+}
+
+.menu-enter-from,
+.menu-leave-to {
+  opacity: 0;
+}
+
+.menu-enter-active li {
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  transition-delay: calc(0.05s + var(--i) * 0.06s);
+}
+
+.menu-enter-from li {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.burger svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  color: var(--ink);
+}
+
 @media (max-width: 640px) {
   .nav-links {
-    position: absolute;
-    top: calc(100% + 0.5rem);
-    right: 0;
-    flex-direction: column;
-    background: var(--glass-bg-strong);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-md);
-    padding: 1rem 1.25rem;
-    backdrop-filter: blur(var(--glass-blur));
     display: none;
-  }
-
-  .nav-links.open {
-    display: flex;
   }
 
   .burger {
     display: flex;
+  }
+}
+
+/* Auf dem Desktop gibt es das Vollbild-Menü nie */
+@media (min-width: 641px) {
+  .mobile-menu {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-enter-active,
+  .menu-leave-active,
+  .menu-enter-active li {
+    transition: none;
   }
 }
 </style>
