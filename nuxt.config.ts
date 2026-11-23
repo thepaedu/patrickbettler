@@ -56,6 +56,7 @@ export default defineNuxtConfig({
         '/galerie',
         '/instagram-check',
         '/stl-viewer',
+        '/glb-viewer',
         ...slugRoutes('./content/blog', '/blog'),
         ...slugRoutes('./content/projects', '/projekte'),
       ],
