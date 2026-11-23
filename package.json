@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "gsap": "^3.12.5",
+    "imagetracerjs": "^1.2.6",
     "jspdf": "^4.2.1",
     "jszip": "^3.10.1",
     "markdown-it": "^14.1.0",

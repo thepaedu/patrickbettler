@@ -57,6 +57,7 @@ export default defineNuxtConfig({
         '/instagram-check',
         '/stl-viewer',
         '/glb-viewer',
+        '/png-to-svg',
         ...slugRoutes('./content/blog', '/blog'),
         ...slugRoutes('./content/projects', '/projekte'),
       ],
