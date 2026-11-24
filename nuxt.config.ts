@@ -58,6 +58,7 @@ export default defineNuxtConfig({
         '/stl-viewer',
         '/glb-viewer',
         '/png-to-svg',
+        '/bild-erweitern',
         ...slugRoutes('./content/blog', '/blog'),
         ...slugRoutes('./content/projects', '/projekte'),
       ],

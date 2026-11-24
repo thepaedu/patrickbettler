@@ -1,5 +1,5 @@
 ---
-title: Geschafft – Ausbildung zum Informatiker EFZ abgeschlossen
+title: Ausbildung zum Informatiker EFZ abgeschlossen
 date: 2026-08-11
 excerpt: Nach vier Jahren Ausbildung zum Informatiker Applikationsentwicklung EFZ und bestandener Berufsmaturität ein Rückblick und Dank an alle, die mich begleitet haben.
 cover: /images/patrick-bettler-informatiker-abschlussfeier.jpg
