@@ -1,0 +1,1 @@
+import{y as e}from"./DTaOtYtG.js";function t(t){if(!t||/^https?:\/\//.test(t))return t;let n=e().app.baseURL||`/`;return`${n.endsWith(`/`)?n.slice(0,-1):n}${t.startsWith(`/`)?t:`/${t}`}`}export{t};

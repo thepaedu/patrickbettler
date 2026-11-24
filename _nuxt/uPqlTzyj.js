@@ -1,5 +1,5 @@
 import{n as e,t}from"./BGqkB4GH.js";function n(e){return e?new Date(e).toLocaleDateString(`de-CH`,{year:`numeric`,month:`long`,day:`numeric`,timeZone:`UTC`}):``}var r=`---\r
-title: Geschafft – Ausbildung zum Informatiker EFZ abgeschlossen\r
+title: Ausbildung zum Informatiker EFZ abgeschlossen\r
 date: 2026-08-11\r
 excerpt: Nach vier Jahren Ausbildung zum Informatiker Applikationsentwicklung EFZ und bestandener Berufsmaturität ein Rückblick und Dank an alle, die mich begleitet haben.\r
 cover: /images/patrick-bettler-informatiker-abschlussfeier.jpg\r

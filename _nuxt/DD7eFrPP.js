@@ -1,0 +1,1 @@
+import{R as e,at as t,nt as n,t as r}from"./DTaOtYtG.js";var i={},a={class:`glass-card glass`};function o(r,i){return n(),e(`div`,a,[t(r.$slots,`default`,{},void 0,!0)])}var s=Object.assign(r(i,[[`render`,o],[`__scopeId`,`data-v-7b3409ef`]]),{__name:`GlassCard`});export{s as t};
