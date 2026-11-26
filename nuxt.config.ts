@@ -54,6 +54,7 @@ export default defineNuxtConfig({
         '/blog',
         '/projekte',
         '/galerie',
+        '/tools',
         '/instagram-check',
         '/stl-viewer',
         '/glb-viewer',

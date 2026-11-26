@@ -101,6 +101,7 @@ const navLinks = [
   { to: '/blog', label: 'Blog' },
   { to: '/galerie', label: 'Galerie' },
   { to: '/projekte', label: 'Projekte' },
+  { to: '/tools', label: 'Tools' },
 ]
 </script>
 
